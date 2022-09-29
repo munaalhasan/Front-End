@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+.d1{
+border:1px dotted blue;
+background-color:#D3D3D3;
+padding:20px;
+}
+.d2{
+border:1px dotted blue; 
+margin-top:20px;
+padding:10px;
+}
+th, td {
+    border: 1px solid;
+	background-color:#D3D3D3;
+}
+</style>
+
+<script> 
+var cr=0; 
+var br;
+function save(){
+//if (typeof(Storage) !== "undefined") {
+    var count = localStorage.length; 
+	var inputs = document.getElementsByClassName("itm"); 
+	var x1=inputs[0].value;
+	var x2=inputs[1].value;
+    localStorage.setItem(x1,x2); 	
+    br=count;
+//}
+/* else {
+    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+}*/
+}
+
+function load() { 
+    var datacount = localStorage.length; 
+    if (datacount > 0) 
+    { 
+        for (var i = 0; i < datacount; i++) { 
+        var k = localStorage.key(i); 
+        var p = localStorage.getItem(k);   			
+		var table = document.getElementById("mytable");
+        var row = table.insertRow();
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+		cell1.innerHTML = k;  
+		cell2.innerHTML = p;
+		row.setAttribute("id", "tr"+k);
+		cell2.setAttribute("id", "c"+k);
+        }  
+    } 
+}
+function modify(){
+var ix=document.getElementById("text1").value;
+var q=document.getElementById("text2").value;
+var datacount = localStorage.length; 
+    if (datacount > 0) 
+    { 
+    for (var i = 0; i < datacount; i++) { 		
+        var k = localStorage.key(i);  
+        if(ix==k){ 
+        localStorage.setItem(k, q );	
+        document.getElementById('c'+k).innerHTML=q;		
+    }
+    }
+ }
+}
+
+
+function remove() {
+var ix=document.getElementById("text1").value;
+var datacount = localStorage.length; 
+   if (datacount > 0) 
+    { 
+    for (var i = 0; i < datacount; i++) { 		
+        var k = localStorage.key(i);   
+        if(ix==k){
+		localStorage.removeItem(k); 
+        document.getElementById('tr'+k).remove();		
+        //document.getElementById('mytable').deleteRow(6+i);	
+    }
+}
+}
+}
+function clr(){
+    var storagecount = localStorage.length ; 	
+    if (storagecount > 0) 
+    { 
+        for (var i = 0; i < storagecount; i++) { 
+		var k = localStorage.key(i);        
+        document.getElementById('tr'+k).remove();
+        //document.getElementById('mytable').deleteRow(6+i);			
+        }
+    localStorage.clear();		
+    }
+}
+ 
+
+</script>
+
+</head>
+<body onload="load()">
+<div id="result"></div>
+<h1>Enter Items And Quantity</h1>
+
+<div class="d1">
+Item <input type="text" name="item" id="text1" class="itm">
+Quantity <input type="text" name="quantity" id="text2" class="itm"><br><br>
+<button onclick="save()">save</button>
+<button onclick="modify()">modify</button>
+<button onclick="remove()">remove</button>
+</div>
+
+<div class="d2">
+<b>Shopping List</b>
+<br><br>
+<table style="width:15%" id="mytable">
+  <tr>
+    <th>Name</th>
+    <th>Value</th> 
+  </tr>
+  <tr>
+    <td>Bread</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>Milk</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>Cucumber</td>
+    <td>2</td>
+  </tr>
+    <tr>
+    <td>Rice</td>
+    <td>1</td>
+  </tr>
+    <tr>
+    <td>Cookies</td>
+    <td>4</td>
+  </tr>
+</table>
+<br>
+<button onclick="clr()">clear</button> *Remove all items
+</div>
+</body>
+</html>
